@@ -10,6 +10,6 @@ namespace Ajax_Repository_Crud.Models
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext>options) : base(options) { }
         public DbSet<Books> Books { get; set; }
-        public DbSet<Author> Authors { get; set; }
+        public DbSet<Author> Author { get; set; }
     }
 }

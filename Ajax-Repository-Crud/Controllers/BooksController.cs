@@ -11,9 +11,11 @@ namespace Ajax_Repository_Crud.Controllers
     public class BooksController : Controller
     {
         private GenericInterface<BookWithAuthorViewModel> _Bookservices;
-        public BooksController(GenericInterface<BookWithAuthorViewModel> _Bookservices)
+        private IBook _Bookservices2;
+        public BooksController(GenericInterface<BookWithAuthorViewModel> _Bookservices, IBook _Bookservices2)
         {
            this. _Bookservices = _Bookservices;
+            this._Bookservices2 = _Bookservices2;
         }
         public IActionResult Index()
         {
@@ -24,6 +26,16 @@ namespace Ajax_Repository_Crud.Controllers
         {
             var books = _Bookservices.GetData();
             return Json(books);
+        }
+        [HttpPost]
+        public JsonResult DeleteBook(int id)
+        {
+            var Result = _Bookservices2.DeleteBook(id);
+            if (Result)
+            {
+                return Json(new { message="book deleted",ok=true});
+            }
+            return Json(new { message = "book not deleted", ok = false });
         }
     }
 }

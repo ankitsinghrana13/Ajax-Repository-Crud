@@ -7,6 +7,7 @@ namespace Ajax_Repository_Crud.Interface
 {
    public interface IBook
     {
+        bool DeleteBook(int id);
     }
     public interface GenericInterface<T>
     {

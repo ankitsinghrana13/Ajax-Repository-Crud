@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Ajax_Repository_Crud.Repository
 {
-    public class BookService:GenericInterface<BookWithAuthorViewModel>
+    public class BookService:GenericInterface<BookWithAuthorViewModel>,IBook
     {
         private ApplicationDbContext dbContext;
         public BookService(ApplicationDbContext dbContext)
@@ -16,11 +16,26 @@ namespace Ajax_Repository_Crud.Repository
             this.dbContext = dbContext;
         }
 
+        public bool DeleteBook(int id)
+        {
+            var book = dbContext.Books.SingleOrDefault(e => e.Id == id);
+            if (book != null)
+            {
+                dbContext.Books.Remove(book);
+                dbContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public List<BookWithAuthorViewModel> GetData()
         {
             var books = (from book in dbContext.Books
                          join
-                         Author in dbContext.Author on book.Authar_Id equals Author.Id
+                         Author in dbContext.Author on book.Author_Id equals Author.Id
                          select new BookWithAuthorViewModel()
                          {
                              id=book.Id,

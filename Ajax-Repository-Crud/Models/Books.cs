@@ -12,7 +12,7 @@ namespace Ajax_Repository_Crud.Models
         public decimal Price { get; set; }
         public int Quantity { get; set; }
         public string Published_On { get; set; }
-        public int Authar_Id { get; set; }
+        public int Author_Id { get; set; }
 
     }
 }

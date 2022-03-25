@@ -30,6 +30,7 @@ namespace Ajax_Repository_Crud
         {
             services.AddControllersWithViews();
             services.AddTransient<GenericInterface<BookWithAuthorViewModel>,BookService>();
+            services.AddTransient<IBook, BookService>();
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Config"));

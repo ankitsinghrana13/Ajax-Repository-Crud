@@ -1,14 +1,72 @@
 ﻿
 @{
-  
+
 }
 
+
+<div class="content-wrapper">
+    <div class="container">
+        <table class="table table-bordered" id="tbl_books">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    
+                    <th>Author</th>
+ <th>Email</th>
+                    <th>Moblie</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
         $.get('@Url.Action("GetBooks","Books")', function (response) {
             console.log(response)
+            $("#tbl_books").DataTable({
+
+                data: response,
+                columns: [
+                    { data: "id" },
+                    { data: "title" },
+                    { data: "price" },
+                    { data: "quantity" },
+                 
+                    { data: "authorName" },
+                    { data: "authorEmail" }, 
+                    
+                    {
+                        data: "authorMobile", render: function (authorMobile) {
+                            return "+91-" + authorMobile
+
+                        }
+                    },
+                    {
+                        data: "id", render: function (id) {
+                            return "<a href='#' onClick=deleteBook("+id+")><i class='fa fa-trash text-danger'></a>"
+                        }
+                    }
+                  
+                ]
+            });
+
         })
     })
+    const deleteBook = (id) => {
+        if (confirm("Are you sure  to remove this book ?")) {
+            $.post('@Url.Action("DeleteBook", "Books")', {id:id},function () {
+
+                console.log(Response)
+            })
+        }
+    }
 </script>
 
 
